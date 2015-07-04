@@ -50,7 +50,7 @@ module.exports = class
       names.forEach (name, i) ->
         ignore = used.indexOf(name) > -1
         last   = names.length - 1 == i
-        req    = "require \"#{rpath}\""
+        req    = rpath
         
         if last && ignore
           tree = req

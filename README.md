@@ -55,7 +55,7 @@ Requiring pieces of your dependency tree is easier with the helper:
 
 ```coffee
 { Routes, Components, Stores } = require("requirement") ->
-  Routes:     require "."
+  Routes:     require "./"
   Components: require "../../../app/scripts/components"
   Stores:     require "../../../app/scripts/stores"
 ```
