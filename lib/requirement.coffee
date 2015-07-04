@@ -1,5 +1,14 @@
-module.exports = class
+requirement = (fn) ->
+  callAllFunctions = (klasses) ->
+    obj = {}
+    for name, klass of klasses
+      if typeof klass == "function"
+        obj[name] = klass()
+      else
+        obj[name] = callAllFunctions klass
+    obj
 
-  @Task: require "./requirement/task"
+  callAllFunctions fn()
 
-  constructor: (fn) ->
+requirement.Task = require "./requirement/task"
+module.exports   = requirement

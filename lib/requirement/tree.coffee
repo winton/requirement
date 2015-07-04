@@ -4,7 +4,12 @@ path = require "path"
 module.exports = class
 
   constructor: ({ dir, onTree }) ->
-    @buildTree { dir, onTree }
+    name = @classify path.basename dir
+    
+    tree = {}
+    tree[name] = @buildTree { dir, onTree }
+
+    onTree { name, tree, fpath: dir } if onTree
 
   buildTree: ({ dir, onTree, used_names }) ->
     dir          = path.resolve dir
