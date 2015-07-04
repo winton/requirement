@@ -35,7 +35,7 @@ module.exports = class
     for name, rpath of tree
       out += Array(indent-1).join " "
       if typeof rpath == "object"
-        out += "#{name}: \n" + @writeKeyValue tree[name], indent + 2
+        out += "#{name}:\n" + @writeKeyValue tree[name], indent + 2
       else
         out += "#{name}: -> require \"#{rpath}\"\n"
     out
