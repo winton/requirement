@@ -11,7 +11,7 @@ module.exports = class
     forbidden    = [ '.json', '.node' ]
     used_names ||= []
 
-    @tree = {}
+    tree  = {}
     files = fs.readdirSync(dir)
 
     files.forEach (file) =>
@@ -19,13 +19,19 @@ module.exports = class
       name  = path.basename  file, ext
       fpath = path.join dir, file
       rpath = path.join dir, name
+      used  = used_names.slice()
 
       if fs.lstatSync(fpath).isDirectory()
         file = @classify file
-        used_names.push file
+        used.push file
 
-        @tree[file] = @buildTree { dir: fpath, used_names, onTree }
-        onTree { name: file, @tree, fpath } if onTree
+        tree[file] = @buildTree {
+          dir: fpath
+          used_names: used
+          onTree
+        }
+
+        onTree { name: file, tree, fpath } if onTree
         return
       
       return if forbidden.indexOf(ext) >= 0 or
@@ -34,16 +40,24 @@ module.exports = class
       
       name  = @classify(name)
       names = name.split(".")
-      child = @tree
+      child = tree
 
       names.forEach (name, i) ->
-        if names.length - 1 == i
-          child[name] = "require \"#{rpath}\""
-        else if used_names.indexOf(name) > -1
+        ignore = used.indexOf(name) > -1
+        last   = names.length - 1 == i
+        req    = "require \"#{rpath}\""
+        
+        if last && ignore
+          tree = req
+        else if last
+          child[name] = req
+        else if ignore
           return
         else
           child[name] ||= {}
           child = child[name]
+
+    tree
 
   classify: (string) ->
     regex = /^[a-z]|[_\.][a-z]/g

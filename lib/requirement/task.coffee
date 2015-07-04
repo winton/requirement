@@ -6,7 +6,8 @@ Tree   = require "./tree"
 module.exports = class
 
   constructor: ({ @paths }) ->
-    @buildIndices dir for dir in @paths
+    for dir in @paths
+      do (dir) => @buildIndices dir
 
   buildIndices: (dir) ->
     new Tree { dir, @onTree }
@@ -14,7 +15,8 @@ module.exports = class
   onTree: ({ name, tree, fpath }) ->
     rm = new RegExp fpath, "g"
 
-    out = coffee.build "module.exports = #{JSON.stringify tree}"
+    out = tree[name]
+    out = coffee.build "module.exports = #{JSON.stringify out}"
     out = out.code
     out = out.replace(rm, ".").replace /'/g, ""
     out = out.replace /require/g, "-> require"
