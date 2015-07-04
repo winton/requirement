@@ -1,0 +1,25 @@
+{
+  "name": "requirement",
+  "version": "0.0.1",
+  "description": "Turn nested requirements into a classy object",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:winton/requirement.git"
+  },
+  "author": "Winton Welsh <winton@cyclo.ps>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/winton/requirement/issues"
+  },
+  "homepage": "https://github.com/winton/requirement",
+  "dependencies": {
+    "coffee-script": "^1.9.3"
+  },
+  "devDependencies": {
+    "js2coffee": "^2.1.0"
+  }
+}
