@@ -10,6 +10,7 @@ module.exports = class
       do (dir) => @buildIndices dir
 
   buildIndices: (dir) ->
+    dir = path.resolve dir
     new Tree { dir, @onTree }
 
   onTree: ({ name, tree, fpath }) ->
