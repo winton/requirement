@@ -37,5 +37,5 @@ module.exports = class
       if typeof rpath == "object"
         out += "#{name}:\n" + @writeKeyValue tree[name], indent + 2
       else
-        out += "#{name}: -> require \"#{rpath}\"\n"
+        out += "#{name}: require \"#{rpath}\"\n"
     out

@@ -10,6 +10,8 @@ npm install requirement --save
 
 Generating index files allows you to do a `require` on any directory and get back an object representing the directory structure.
 
+For big projects, this allows you to require dependencies in a more concise way.
+
 ### Example
 
 `cms/index.coffee`:
@@ -19,23 +21,29 @@ Generating index files allows you to do a `require` on any directory and get bac
 #
 module.exports =
   Editor:
-    Article: -> require "./editor/cms.editor.article"
-    Header: -> require "./editor/cms.editor.header"
-  Header: -> require "./header/cms.header"
+    Article: require "./editor/cms.editor.article"
+    Header: require "./editor/cms.editor.header"
+  Header: require "./header/cms.header"
   Modals:
-    Cropper: -> require "./modals/cms.modals.cropper"
-    Embed: -> require "./modals/cms.modals.embed"
-    Media: -> require "./modals/cms.modals.media"
+    Cropper: require "./modals/cms.modals.cropper"
+    Embed: require "./modals/cms.modals.embed"
+    Media: require "./modals/cms.modals.media"
     Headers:
-      Publish: -> require "./modals/headers/cms.modals.headers.publish"
-      Strip: -> require "./modals/headers/cms.modals.headers.strip"
+      Publish: require "./modals/headers/cms.modals.headers.publish"
+      Strip: require "./modals/headers/cms.modals.headers.strip"
+```
+
+Now requiring becomes easy:
+
+```coffee
+{ Editor, Header } = require "./cms"
 ```
 
 Indexing with explicit requires also keeps your project compliant with Browserify compilation.
 
-## Gulp task
+## Build indices
 
-The gulp task generates `index.coffee` files in a directory and all subdirectories.
+This gulp task generates an `index.coffee` file in a directory and its subdirectories.
 
 ```coffee
 gulp = require "gulp"
@@ -48,16 +56,3 @@ gulp.task "index", ->
   ]
   new Task { paths }
 ```
-
-## Dependency helper
-
-Requiring pieces of your dependency tree is easier with the helper:
-
-```coffee
-{ Routes, Components, Stores } = require("requirement") ->
-  Routes:     require "./"
-  Components: require "../../../app/scripts/components"
-  Stores:     require "../../../app/scripts/stores"
-```
-
-With the explicit requires, we remain compliant with Browserify compilation.
