@@ -1,7 +1,7 @@
 {
   "name": "requirement",
-  "version": "0.0.2",
-  "description": "Turn nested requirements into a classy object",
+  "version": "0.0.3",
+  "description": "Generate dependency index files to simplify requiring dependencies",
   "main": "index.js",
   "scripts": {
     "pretest": "npm run compile",
