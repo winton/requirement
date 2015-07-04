@@ -1,10 +1,13 @@
 {
   "name": "requirement",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Turn nested requirements into a classy object",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run compile",
+    "prepublish": "npm run compile",
+    "compile": "coffee --compile --output lib/ src/",
+    "start": "coffee -w --compile --output lib/ src/"
   },
   "repository": {
     "type": "git",
