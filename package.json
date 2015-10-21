@@ -7,7 +7,8 @@
     "pretest": "npm run compile",
     "prepublish": "npm run compile",
     "compile": "coffee --compile --output lib/ src/",
-    "start": "coffee -w --compile --output lib/ src/"
+    "start": "coffee -w --compile --output lib/ src/",
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,11 @@
   },
   "homepage": "https://github.com/winton/requirement",
   "dependencies": {
-    "coffee-script": "^1.9.3"
+    "coffee-script": "^1.9.3",
+    "js2coffee": "^2.1.0",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "jasmine": ""
   }
 }

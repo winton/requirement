@@ -1,1 +1,4 @@
-module.exports = Task: require "./requirement/task"
+module.exports =
+  Convert: require "./requirement/convert"
+  Index:   require "./requirement/index"
+  Tree:    require "./requirement/tree"

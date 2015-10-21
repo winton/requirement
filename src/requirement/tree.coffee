@@ -3,13 +3,14 @@ path = require "path"
 
 module.exports = class
 
-  constructor: ({ dir, onTree }) ->
+  constructor: ({ dir, onFinish, onTree }) ->
     name = @classify path.basename dir
     
     tree = {}
     tree[name] = @buildTree { dir, onTree }
 
     onTree { name, tree, fpath: dir } if onTree
+    onFinish() if onFinish
 
   buildTree: ({ dir, onTree, used_names }) ->
     dir          = path.resolve dir
@@ -36,6 +37,10 @@ module.exports = class
           onTree
         }
 
+        if Object.keys(tree[file]).length == 0
+          delete tree[file]
+          return
+
         onTree { name: file, tree, fpath } if onTree
         return
       
@@ -44,20 +49,14 @@ module.exports = class
         name == 'index'
       
       name  = @classify(name)
-      names = name.split(".")
+      names = @unique { used, names: name.split(".") }
       child = tree
 
       names.forEach (name, i) ->
-        ignore = used.indexOf(name) > -1
-        last   = names.length - 1 == i
-        req    = rpath
+        last = names.length - 1 == i
         
-        if last && ignore
-          tree = req
-        else if last
-          child[name] = req
-        else if ignore
-          return
+        if last
+          child[name] = rpath
         else
           child[name] ||= {}
           child = child[name]
@@ -68,3 +67,9 @@ module.exports = class
     regex = /^[a-z]|[_\.][a-z]/g
     string.replace regex, (match) ->
       match.toUpperCase().replace /_/, ""
+
+  unique: ({ names, used }) ->
+    arr = []
+    for n in names
+      arr.push(n) if used.indexOf(n) == -1
+    arr
