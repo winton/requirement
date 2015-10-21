@@ -1,6 +1,6 @@
 {
   "name": "requirement",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Generate project index files to simplify requiring dependencies",
   "main": "index.js",
   "scripts": {
